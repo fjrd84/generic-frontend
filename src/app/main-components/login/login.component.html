@@ -1,0 +1,6 @@
+<div>
+  <input type="text" name="username" [(ngModel)]="currentUser.userName" >
+  <input type="password" name="password" [(ngModel)]="currentUser.password">
+  <button (click)="logIn()">Send!</button>
+  <div>{{_sessionService.authToken}}</div>
+</div>
