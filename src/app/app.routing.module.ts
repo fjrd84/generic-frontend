@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './main-components/home/home.component';
+import { AuthComponent } from './main-components/auth/auth.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent }
+    { path: '', component: HomeComponent },
+    { path: 'auth/:id/:authToken', component: AuthComponent }
 ];
 
 @NgModule({

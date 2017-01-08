@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestMethod, RequestOptions, Response } from '@angular/http';
+import { Router } from '@angular/router';
 
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
@@ -66,6 +67,17 @@ export class SessionService {
         return data;
       })
       .catch(this.handleError);
+  }
+
+  oAuthLogin(id: string, authToken: string) {
+    console.log("oAuth with: ", id, authToken);
+    this._userLoginData = { userId: id, id: authToken };
+    localStorage.setItem('userLoginData', JSON.stringify(this._userLoginData));
+    this.getUserInfo().subscribe(data => {
+      // when the authToken and userId are right, we navigate back home.
+      alert("Yuhuuu!");
+    });
+
   }
 
   /**

@@ -12,12 +12,14 @@ import { SessionService } from './services/session.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './main-components/home/home.component';
 import { LoginComponent } from './main-components/login/login.component';
+import { AuthComponent } from './main-components/auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
