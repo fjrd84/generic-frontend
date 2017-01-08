@@ -5,6 +5,7 @@
   <button *ngIf="!_sessionService.loggedIn" (click)="logIn()">Log in</button>
   <button *ngIf="_sessionService.loggedIn" (click)="logOut()">Log out</button>
   <div class="extra-info" *ngIf="_sessionService.loggedIn">
-    Welcome back, {{_sessionService.user.username}}. Your token is: {{_sessionService.userLoginData.id}}
+    <p>Welcome back, {{_sessionService.user.username}}.</p>
+    <p>Your token is: {{_sessionService.userLoginData.id}}.</p>
   </div>
 </div>

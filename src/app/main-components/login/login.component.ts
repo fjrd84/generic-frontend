@@ -17,6 +17,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  /**
+   * With the current login information, use the session service to perform a login request.
+   * @memberOf LoginComponent
+   */
   logIn() {
     this._sessionService.logIn(this._loginData.userName, this._loginData.password).subscribe(
       (response) => {
@@ -25,6 +30,10 @@ export class LoginComponent implements OnInit {
     )
   }
 
+  /**
+   * Logout the current user.
+   * @memberOf LoginComponent
+   */
   logOut() {
     let self = this;
     this._sessionService.logOut().subscribe(data => {

@@ -7,23 +7,31 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class SessionService {
 
-  private _baseUrl: string; // 
+  private _baseUrl: string; // Url of the API
   private _userLoginData: any; // _userLoginData describes the user login object, containing login-information such as auth token, ttl and user id
   private _loggedIn: Boolean; // True when the user has been successfully logged in
   private _user: any; // _user describes the properties of a user (name, surname, etc.)
 
+
+  // GETTERS 
   public get userLoginData() {
     return this._userLoginData;
   }
-
   public get user() {
     return this._user;
   }
-
   public get loggedIn() {
     return this._loggedIn;
   }
 
+  /**
+   * Creates an instance of SessionService. 
+   * 
+   * When login information is available in the local storage, the user 
+   * object is automatically retrieved.
+   * 
+   * @param {Http} http
+   */
   constructor(private http: Http) {
     this._baseUrl = "http://localhost:3200/api/";
     this._loggedIn = false;
@@ -42,6 +50,12 @@ export class SessionService {
     }
   }
 
+  /**
+   * It retrieves the user object from the API. 
+   * The user login data (containing the AuthToken is necessary at this point).
+   * @returns {Observable<Object>}
+   * @memberOf SessionService
+   */
   getUserInfo(): Observable<Object> {
     let self = this;
     return this.http.get(this._baseUrl + "Users/" + this._userLoginData.userId + "?access_token=" + this._userLoginData.id)
@@ -54,6 +68,10 @@ export class SessionService {
       .catch(this.handleError);
   }
 
+  /**
+   * Helper to call the getUserInfo function and subscribe to a result.
+   * @memberOf SessionService
+   */
   updateUserInfo() {
     this.getUserInfo().subscribe(data => {
     });
@@ -104,7 +122,7 @@ export class SessionService {
 
 
   /**
-   * Generic data extractor for JSON a Response
+   * Generic data extractor for JSON a Response.
    * 
    * @param {Response} res
    * @returns {*} The JSON parsed response.
@@ -116,6 +134,12 @@ export class SessionService {
     return body || {};
   }
 
+  /**
+   * Generic error handler.
+   * @param {(Response | any)} error
+   * @returns
+   * @memberOf SessionService
+   */
   handleError(error: Response | any) {
     return Observable.throw("test error");
   }
