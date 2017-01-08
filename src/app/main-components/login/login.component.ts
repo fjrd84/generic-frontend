@@ -8,21 +8,28 @@ import { SessionService } from '../../services/session.service';
 })
 export class LoginComponent implements OnInit {
 
-  private currentUser: {userName: string, password: string};
+  private _loginData: { userName: string, password: string };
 
   constructor(private _sessionService: SessionService) {
-    this.currentUser = {userName: "", password: ""};
+    this._loginData = { userName: "", password: "" };
   }
 
   ngOnInit() {
   }
 
-  logIn(){
-    this._sessionService.attemptLogin(this.currentUser.userName, this.currentUser.password).subscribe(
-      (response) => {        
+  logIn() {
+    this._sessionService.logIn(this._loginData.userName, this._loginData.password).subscribe(
+      (response) => {
         console.log(response);
       }
     )
   }
+
+  logOut() {
+    let self = this;
+    this._sessionService.logOut().subscribe(data => {
+    });
+  }
+
 
 }
