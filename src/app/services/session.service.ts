@@ -33,8 +33,8 @@ export class SessionService {
    * 
    * @param {Http} http
    */
-  constructor(private http: Http) {
-    this._baseUrl = "http://localhost:3200/api/";
+  constructor(private http: Http, private _router: Router) {
+    this._baseUrl = "http://127.0.0.1:3200/api/";
     this._loggedIn = false;
     let userString = localStorage.getItem('userLoginData'),
       userLoginData = {};
@@ -75,7 +75,7 @@ export class SessionService {
     localStorage.setItem('userLoginData', JSON.stringify(this._userLoginData));
     this.getUserInfo().subscribe(data => {
       // when the authToken and userId are right, we navigate back home.
-      alert("Yuhuuu!");
+      this._router.navigate(['']);
     });
 
   }
