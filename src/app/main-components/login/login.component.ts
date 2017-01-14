@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../services/session.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'login',
@@ -9,12 +10,14 @@ import { SessionService } from '../../services/session.service';
 export class LoginComponent implements OnInit {
 
   private _loginData: { userName: string, password: string };
+  private _baseUrl: string;
 
   constructor(private _sessionService: SessionService) {
     this._loginData = { userName: "", password: "" };
   }
 
   ngOnInit() {
+    this._baseUrl = `${environment.apiProtocol}://${environment.apiHost}:${environment.apiPort}`;
   }
 
 

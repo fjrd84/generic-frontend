@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestMethod, RequestOptions, Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
@@ -34,7 +35,7 @@ export class SessionService {
    * @param {Http} http
    */
   constructor(private http: Http, private _router: Router) {
-    this._baseUrl = "http://127.0.0.1:3200/api/";
+    this._baseUrl = `http://${environment.apiHost}:${environment.apiPort}/api/`;
     this._loggedIn = false;
     let userString = localStorage.getItem('userLoginData'),
       userLoginData = {};
