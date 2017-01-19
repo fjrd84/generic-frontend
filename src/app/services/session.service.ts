@@ -35,7 +35,7 @@ export class SessionService {
    * @param {Http} http
    */
   constructor(private http: Http, private _router: Router) {
-    this._baseUrl = `http://${environment.apiHost}:${environment.apiPort}/api/`;
+    this._baseUrl = `http://${environment.apiHost}:${environment.apiPort}`;
     this._loggedIn = false;
     let userString = localStorage.getItem('userLoginData'),
       userLoginData = {};
@@ -46,7 +46,7 @@ export class SessionService {
     }
     this._userLoginData = userLoginData || {};
     if (typeof this._userLoginData.id !== "undefined") {
-      this.updateUserInfo();
+      //this.updateUserInfo();
     } else {
       this._user = {};
     }
@@ -60,7 +60,7 @@ export class SessionService {
    */
   getUserInfo(): Observable<Object> {
     let self = this;
-    return this.http.get(this._baseUrl + "Users/" + this._userLoginData.userId + "?access_token=" + this._userLoginData.id)
+    return this.http.get(this._baseUrl + "/Users/" + this._userLoginData.id + "?access_token=" + this._userLoginData.token)
       .map(res => {
         self._loggedIn = true;
         let data = this.extractData(res);
@@ -74,11 +74,10 @@ export class SessionService {
     console.log("oAuth with: ", id, authToken);
     this._userLoginData = { userId: id, id: authToken };
     localStorage.setItem('userLoginData', JSON.stringify(this._userLoginData));
-    this.getUserInfo().subscribe(data => {
+    /*this.getUserInfo().subscribe(data => {
       // when the authToken and userId are right, we navigate back home.
       this._router.navigate(['']);
-    });
-
+    });*/
   }
 
   /**
@@ -103,13 +102,13 @@ export class SessionService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let self = this;
-    return this.http.post(this._baseUrl + "Users/login", { username: username, password: password }, options)
+    return this.http.post(this._baseUrl + "/login", { email: username, password: password }, options)
       .map(res => {
         let data = this.extractData(res);
         self._userLoginData = data;
         localStorage.setItem('userLoginData', JSON.stringify(data));
         // After a successful login, the user information is retrieved.
-        self.updateUserInfo();
+        //self.updateUserInfo();
         return data;
       })
       .catch(this.handleError);
@@ -122,7 +121,7 @@ export class SessionService {
    */
   logOut() {
     let headers = new Headers();
-    return this.http.post(this._baseUrl + "Users/logout?access_token=" + this._userLoginData.id, {})
+    return this.http.post(this._baseUrl + "Users/logout?access_token=" + this._userLoginData.token, {})
       .map(res => {
         let data = this.extractData(res);
         this._userLoginData = {};
