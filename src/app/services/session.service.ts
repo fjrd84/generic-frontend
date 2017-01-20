@@ -14,7 +14,6 @@ export class SessionService {
   private _loggedIn: Boolean; // True when the user has been successfully logged in
   private _user: any; // _user describes the properties of a user (name, surname, etc.)
 
-
   // GETTERS 
   public get userLoginData() {
     return this._userLoginData;
@@ -91,12 +90,9 @@ export class SessionService {
 
   /**
    * It attempts to login a user using the specified username and password.
-   * 
    * @param {string} username
    * @param {string} password 
    * @returns {Observable<Object>} An observable that provides with the information about the logged in user or an error.
-   * 
-   * @memberOf SessionService
    */
   logIn(username: string, password: string): Observable<Object> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -135,10 +131,8 @@ export class SessionService {
 
   /**
    * Generic data extractor for JSON a Response.
-   * 
    * @param {Response} res
    * @returns {*} The JSON parsed response.
-   * 
    * @memberOf SessionService
    */
   extractData(res: Response): any {

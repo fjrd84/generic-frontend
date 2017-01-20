@@ -11,6 +11,8 @@ let options: RequestOptions;
 
 describe('SessionService', () => {
 
+  let sessionService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SessionService, Http, ConnectionBackend],
@@ -18,13 +20,18 @@ describe('SessionService', () => {
     });
   });
 
-  it('The service exists',
-    inject([SessionService], (service: SessionService) => {
-      expect(service).toBeTruthy();
-    }));
+  beforeEach(inject([SessionService], s => {
+    sessionService = s;
+  }));
 
-  it('Initial user is an empty object',
-    inject([SessionService], (service: SessionService) => {
-      expect(JSON.stringify(service.userLoginData)).toBe("{}");
-    }));
+  it('exists', () => {
+    expect(sessionService).toBeTruthy();
+  });
+
+  it('has an empty user in the beginning', ()=>{
+      expect(JSON.stringify(sessionService.userLoginData)).toBe("{}");
+  });
+
+  
+
 });
