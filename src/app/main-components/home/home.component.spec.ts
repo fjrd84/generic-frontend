@@ -4,9 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SessionService } from '../../services/session.service';
-
 import { Http, HttpModule, Headers, RequestMethod, RequestOptions, Response, ConnectionBackend } from '@angular/http';
-
 import { HomeComponent } from './home.component';
 import { LoginComponent } from '../login/login.component';
 
@@ -29,7 +27,7 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('exists', () => {
     expect(component).toBeTruthy();
   });
 });
