@@ -7,6 +7,7 @@ import { SessionService } from '../../services/session.service';
 import { Http, HttpModule, Headers, RequestMethod, RequestOptions, Response, ConnectionBackend } from '@angular/http';
 import { HomeComponent } from './home.component';
 import { LoginComponent } from '../login/login.component';
+import { defaultLastPicture } from '../../constants/default-media';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -29,5 +30,9 @@ describe('HomeComponent', () => {
 
   it('exists', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('has a default last picture before its initialization', () => {
+    expect(component.lastPicture).toBe(defaultLastPicture);
   });
 });

@@ -1,0 +1,1 @@
+export const defaultLastPicture: string = "assets/pictures/default-last-picture.jpg";
