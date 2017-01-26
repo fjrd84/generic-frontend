@@ -1,6 +1,17 @@
-# LastadApp
+# Generic Frontend
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
+This is an Angular 2 project, generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
+
+It is a generic frontend application that could be used as a starting point for other projects, providing the following features:
+
+- User login with email/password as well as with existing account in some other provider (Google, Facebook, Twitter, etc.), using oAuth.
+- Integration with payment gateways in order to provide premium services 
+- Real time updates with socket.io
+- An example premium service
+
+It works together with [generic-backend](https://github.com/fjrd84/generic-backend).
+
+The first premium service will be using the main view of this app as a full screen ad poster, where you can pay for displaying the picture you wish, typically an advertisement. 
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
