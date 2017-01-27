@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class LastadAppPage {
+export class GenericFrontendPage {
   navigateTo() {
     return browser.get('/');
   }

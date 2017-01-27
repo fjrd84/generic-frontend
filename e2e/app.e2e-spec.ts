@@ -1,10 +1,10 @@
-import { LastadAppPage } from './app.po';
+import { GenericFrontendPage } from './app.po';
 
-describe('lastad-app App', function() {
-  let page: LastadAppPage;
+describe('generic-frontend App', function() {
+  let page: GenericFrontendPage;
 
   beforeEach(() => {
-    page = new LastadAppPage();
+    page = new MigrationProjectPage();
   });
 
   it('should display message saying app works', () => {
