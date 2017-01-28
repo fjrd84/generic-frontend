@@ -1,6 +1,6 @@
 # Generic Frontend
 
-This is an Angular 2 project, generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
+This is an Angular 2 project, generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
 It is a generic frontend application that could be used as a starting point for other projects, providing the following features:
 

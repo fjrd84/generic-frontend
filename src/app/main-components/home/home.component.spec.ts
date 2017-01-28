@@ -35,4 +35,17 @@ describe('HomeComponent', () => {
   it('has a default last picture before its initialization', () => {
     expect(component.lastPicture).toBe(defaultLastPicture);
   });
+
+  it('should start with the login window deactivated, and toggle should be able to activate it and deactivate it again.', () => {
+    let loginWindow = fixture.debugElement.query(By.css('#login-window'));
+    // Initially, showLogin is false, and the class 'active' is not present in #login-window
+    expect(component.showLogin).toBe(false);
+    expect(loginWindow.classes.active).toBe(false);
+    component.toggleLogin();
+    fixture.detectChanges();
+    // After clicking on toggleLogin, showLogin must be true, and 'active' is a class of the #login-window
+    expect(component.showLogin).toBe(true);
+    expect(loginWindow.classes.active).toBe(true);
+  });
+
 });
