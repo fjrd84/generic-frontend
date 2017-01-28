@@ -68,4 +68,14 @@ describe('HomeComponent', () => {
     expect(hallOfFameWindow.classes.active).toBe(true);
   });
 
+  it('the mask is shown whenever a window is opened', ()=>{
+    expect(component.showMask).toBe(false);
+    component.toggleLogin();
+    fixture.detectChanges();
+    expect(component.showMask).toBe(true);
+    component.hideWindows();
+    fixture.detectChanges();
+    expect(component.showMask).toBe(false); 
+  })
+
 });

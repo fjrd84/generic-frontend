@@ -1,10 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, style, state, animate, transition, trigger } from '@angular/core';
 import { defaultLastPicture } from '../../constants/default-media';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+  trigger('fadeInOut', [
+    transition(':enter', [   // :enter is alias to 'void => *'
+      style({opacity:0}),
+      animate(500, style({opacity:1})) 
+    ]),
+    transition(':leave', [   // :leave is alias to '* => void'
+      animate(500, style({opacity:0})) 
+    ])
+  ])
+]
 })
 export class HomeComponent implements OnInit {
 
@@ -18,6 +29,10 @@ export class HomeComponent implements OnInit {
 
   public get showHallOfFame(): boolean {
     return this._showHallOfFame;
+  }
+
+  public get showMask(): boolean{
+    return this.showLogin || this.showHallOfFame;
   }
 
   public get lastPicture(): string {
@@ -37,6 +52,11 @@ export class HomeComponent implements OnInit {
 
   toggleHallOfFame(){
     this._showHallOfFame = !this._showHallOfFame;
+  }
+
+  hideWindows(){
+    this._showLogin = false;
+    this._showHallOfFame = false;
   }
 
   ngOnInit() {

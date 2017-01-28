@@ -1,5 +1,7 @@
 <div id="home-wrapper" [ngStyle]="{'background-image': 'url(' + lastPicture + ')'}">
-    <div id="top-controls">
+    <div id="dark-mask" (click)="hideWindows()" *ngIf="showMask" [@fadeInOut]>
+    </div>
+    <div *ngIf="!showMask" [@fadeInOut] id="top-controls">
         <button (click)="toggleLogin()">Login</button>
         <button (click)="toggleHallOfFame()">Hall of Fame</button>
     </div>
