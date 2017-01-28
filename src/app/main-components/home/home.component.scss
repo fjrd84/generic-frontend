@@ -1,4 +1,4 @@
-#home-wrapper{
+#home-wrapper {
     background-size: cover;
     background-color: black;
     background-repeat: no-repeat;
@@ -9,7 +9,19 @@
     left: 0;
 }
 
-#login-window{
+#top-controls {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: auto;
+    button {
+        width: 100px;
+        float: right;
+        clear: both;
+    }
+}
+
+#login-window {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -21,7 +33,7 @@
     height: 0;
     opacity: 0;
     transition: visibility 1s, width 1s, height 1s, opacity 1s;
-    &.active{
+    &.active {
         visibility: visible;
         opacity: 1;
         width: 50vw;
