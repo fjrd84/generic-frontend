@@ -21,7 +21,7 @@
     }
 }
 
-#login-window {
+%home-window {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -39,5 +39,19 @@
         width: 50vw;
         height: 30vh;
         min-height: 150px;
+    }
+}
+
+#login-window {
+    @extend %home-window;
+}
+
+#hall-of-fame-window {
+    @extend %home-window;
+    &.active {
+        visibility: visible;
+        opacity: 1;
+        width: 70vw;
+        height: 90vh;
     }
 }

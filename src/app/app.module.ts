@@ -13,13 +13,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './main-components/home/home.component';
 import { LoginComponent } from './main-components/login/login.component';
 import { AuthComponent } from './main-components/auth/auth.component';
+import { HallOfFameComponent } from './main-components/hall-of-fame/hall-of-fame.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    AuthComponent
+    AuthComponent,
+    HallOfFameComponent
   ],
   imports: [
     BrowserModule,
