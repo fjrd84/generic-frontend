@@ -21,6 +21,7 @@ describe('SessionService', () => {
   });
 
   beforeEach(inject([SessionService], s => {
+    localStorage.clear();
     sessionService = s;
   }));
 

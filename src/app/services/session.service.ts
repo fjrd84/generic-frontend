@@ -14,7 +14,6 @@ export class SessionService {
   private _loggedIn: Boolean; // True when the user has been successfully logged in
   private _user: any; // _user describes the properties of a user (name, surname, etc.)
 
-  // GETTERS 
   public get userLoginData() {
     return this._userLoginData;
   }
