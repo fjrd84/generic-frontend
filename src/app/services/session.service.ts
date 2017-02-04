@@ -79,6 +79,14 @@ export class SessionService {
       .catch(this.handleError);
   }
 
+  connectWithGoogle() {
+    window.location.replace(this._baseUrl + "/auth/connect/google/?token=" + this._authToken);
+  }
+
+  /**
+   * If an auth token has been specified, try to obtain the user information.
+   * @param {string} authToken
+   */
   oAuthLogin(authToken: string) {
     this._authToken = authToken;
     localStorage.setItem('authToken', this._authToken);

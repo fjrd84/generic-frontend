@@ -9,7 +9,9 @@
   </div>
   <button class="logout-button" *ngIf="_sessionService.loggedIn" (click)="logOut()">Log out</button>
   <div class="extra-info" *ngIf="_sessionService.loggedIn">
+    <button (click)="_sessionService.connectWithGoogle()">Connect with google</button>
     <p>Welcome back, {{_sessionService.user | json}}.</p>
     <p>Your token is: {{_sessionService.authToken}}.</p>
-  </div>
+  
+  </div>  
 </div>

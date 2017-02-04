@@ -26,11 +26,10 @@ export class LoginComponent implements OnInit {
    * @memberOf LoginComponent
    */
   logIn() {
-    this._sessionService.logIn(this._loginData.userName, this._loginData.password).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    )
+    this._sessionService.logIn(this._loginData.userName, this._loginData.password)
+      .subscribe((response) => {
+        // No further step is required after a successful login
+      })
   }
 
   /**
