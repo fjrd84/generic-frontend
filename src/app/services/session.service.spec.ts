@@ -29,10 +29,9 @@ describe('SessionService', () => {
     expect(sessionService).toBeTruthy();
   });
 
-  it('has an empty user in the beginning', ()=>{
-      expect(JSON.stringify(sessionService.userLoginData)).toBe("{}");
+  it('has an empty user in the beginning', () => {
+    expect(JSON.stringify(sessionService.userLoginData)).toBe("{}");
   });
 
-  
 
 });

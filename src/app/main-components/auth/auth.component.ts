@@ -13,7 +13,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this._activatedRoute.params.subscribe(params => {
-      this._sessionService.oAuthLogin(params['id'], params['authToken']);
+      this._sessionService.oAuthLogin(params['authToken']);
     });
   }
 

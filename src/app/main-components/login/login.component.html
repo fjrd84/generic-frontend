@@ -9,7 +9,7 @@
   </div>
   <button class="logout-button" *ngIf="_sessionService.loggedIn" (click)="logOut()">Log out</button>
   <div class="extra-info" *ngIf="_sessionService.loggedIn">
-    <p>Welcome back, {{_sessionService.user.username}}.</p>
-    <p>Your token is: {{_sessionService.userLoginData.id}}.</p>
+    <p>Welcome back, {{_sessionService.user | json}}.</p>
+    <p>Your token is: {{_sessionService.authToken}}.</p>
   </div>
 </div>

@@ -10,16 +10,18 @@ import { Observable } from 'rxjs/Observable';
 export class SessionService {
 
   private _baseUrl: string; // Url of the API
-  private _userLoginData: any; // _userLoginData describes the user login object, containing login-information such as auth token, ttl and user id
+  private _authToken: string; // The current JWT auth token  
   private _loggedIn: Boolean; // True when the user has been successfully logged in
   private _user: any; // _user describes the properties of a user (name, surname, etc.)
 
-  public get userLoginData() {
-    return this._userLoginData;
+  public get authToken() {
+    return this._authToken;
   }
+
   public get user() {
     return this._user;
   }
+
   public get loggedIn() {
     return this._loggedIn;
   }
@@ -33,21 +35,28 @@ export class SessionService {
    * @param {Http} http
    */
   constructor(private http: Http, private _router: Router) {
-    this._baseUrl = `http://${environment.apiHost}:${environment.apiPort}`;
+    this._baseUrl = environment.baseUrl;
     this._loggedIn = false;
-    let userString = localStorage.getItem('userLoginData'),
-      userLoginData = {};
-    try {
-      userLoginData = JSON.parse(userString);
-    } catch (error) {
-      console.log(error);
+    this._authToken = localStorage.getItem('authToken');
+    this._user = {};
+    if (this._authToken !== null) {
+      this.updateUserInfo();
     }
-    this._userLoginData = userLoginData || {};
-    if (typeof this._userLoginData.id !== "undefined") {
-      //this.updateUserInfo();
-    } else {
-      this._user = {};
-    }
+  }
+
+  /**
+   * Return request options for the current service.
+   * They contain: Authorization (jwt) and Content-Type (application/json) 
+   * headers.
+   * @private
+   * @returns {RequestOptions}
+   */
+  private _getRequestOptions(): RequestOptions {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'JWT ' + this._authToken
+    });
+    return new RequestOptions({ headers: headers });
   }
 
   /**
@@ -58,7 +67,9 @@ export class SessionService {
    */
   getUserInfo(): Observable<Object> {
     let self = this;
-    return this.http.get(this._baseUrl + "/Users/" + this._userLoginData.id + "?access_token=" + this._userLoginData.token)
+    let options = this._getRequestOptions();
+
+    return this.http.get(this._baseUrl + "/auth/profile/", options)
       .map(res => {
         self._loggedIn = true;
         let data = this.extractData(res);
@@ -68,14 +79,13 @@ export class SessionService {
       .catch(this.handleError);
   }
 
-  oAuthLogin(id: string, authToken: string) {
-    console.log("oAuth with: ", id, authToken);
-    this._userLoginData = { userId: id, id: authToken };
-    localStorage.setItem('userLoginData', JSON.stringify(this._userLoginData));
-    /*this.getUserInfo().subscribe(data => {
+  oAuthLogin(authToken: string) {
+    this._authToken = authToken;
+    localStorage.setItem('authToken', this._authToken);
+    this.getUserInfo().subscribe(data => {
       // when the authToken and userId are right, we navigate back home.
       this._router.navigate(['']);
-    });*/
+    });
   }
 
   /**
@@ -94,16 +104,15 @@ export class SessionService {
    * @returns {Observable<Object>} An observable that provides with the information about the logged in user or an error.
    */
   logIn(username: string, password: string): Observable<Object> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
     let self = this;
-    return this.http.post(this._baseUrl + "/login", { email: username, password: password }, options)
+    return this.http.post(this._baseUrl + "/auth/login",
+      { email: username, password: password }, this._getRequestOptions())
       .map(res => {
         let data = this.extractData(res);
-        self._userLoginData = data;
-        localStorage.setItem('userLoginData', JSON.stringify(data));
+        self._authToken = data.token;
+        localStorage.setItem('authToken', data.token);
         // After a successful login, the user information is retrieved.
-        //self.updateUserInfo();
+        self.updateUserInfo();
         return data;
       })
       .catch(this.handleError);
@@ -115,15 +124,14 @@ export class SessionService {
    * @memberOf SessionService
    */
   logOut() {
-    let headers = new Headers();
-    return this.http.post(this._baseUrl + "Users/logout?access_token=" + this._userLoginData.token, {})
+    return this.http.get(this._baseUrl + "/auth/logout",
+      this._getRequestOptions())
       .map(res => {
-        let data = this.extractData(res);
-        this._userLoginData = {};
+        this._authToken = null;
         this._user = {};
         this._loggedIn = false;
-        localStorage.setItem("userLoginData", "{}");
-        return data;
+        localStorage.clear();
+        return true;
       }).catch(this.handleError);
   }
 

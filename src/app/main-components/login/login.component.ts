@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._baseUrl = `${environment.apiProtocol}://${environment.apiHost}:${environment.apiPort}`;
+    this._baseUrl = environment.baseUrl;
   }
 
 
