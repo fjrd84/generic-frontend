@@ -23,6 +23,7 @@ before_script:
 - npm install coveralls
 - npm install
 - ng build
-- ng test --watch=false --code-coverage
+
+script: ng test --watch=false --code-coverage
 
 after_success: 'npm run coveralls'
