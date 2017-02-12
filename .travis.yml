@@ -1,16 +1,18 @@
 sudo: required
 dist: trusty
 language: node_js
-node_js:
-  - '4.2'
+node_js: stable
+
+notifications:
+  email: false
+  
+cache:
+  directories: node_modules
 
 addons:
 apt:
   sources:
     - google-chrome
-  packages:
-    - google-chrome-stable
-    - google-chrome-beta
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -18,9 +20,14 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-- npm install -g angular-cli
-- npm install -g karma
+- npm install -g codecov
+- npm install coveralls
 - npm install
+- ng lint
 - ng build
+- ng serve & ng e2e
+- ng test --watch=false --code-coverage
 
-script: karma start config/karma.conf.js --single-run
+script:
+ - codecov
+ - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
