@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { SessionService } from '../../services/session.service';
 import { Http, HttpModule, Headers, RequestMethod, RequestOptions, Response, ConnectionBackend } from '@angular/http';
 import { HomeComponent } from './home.component';
-import { LoginComponent } from '../login/login.component';
 import { defaultLastPicture } from '../../constants/default-media';
 
 // Mock the hall-of-fame component with an empty one. 
@@ -15,6 +14,14 @@ import { defaultLastPicture } from '../../constants/default-media';
   template: ''
 })
 export class HallOfFameComponent {
+}
+
+// Mock the login component with an empty one. 
+@Component({
+  selector: 'login',
+  template: ''
+})
+export class LoginComponent {
 }
 
 describe('HomeComponent', () => {
@@ -68,14 +75,14 @@ describe('HomeComponent', () => {
     expect(hallOfFameWindow.classes.active).toBe(true);
   });
 
-  it('the mask is shown whenever a window is opened', ()=>{
+  it('the mask is shown whenever a window is opened', () => {
     expect(component.showMask).toBe(false);
     component.toggleLogin();
     fixture.detectChanges();
     expect(component.showMask).toBe(true);
     component.hideWindows();
     fixture.detectChanges();
-    expect(component.showMask).toBe(false); 
+    expect(component.showMask).toBe(false);
   })
 
 });

@@ -1,11 +1,16 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { SessionService } from '../../services/session.service';
 import { Http, HttpModule, ConnectionBackend } from '@angular/http';
+
+@Injectable()
+class SessionServiceMock{
+
+}
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +19,10 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule, HttpModule],
-      providers: [SessionService, Http, ConnectionBackend],
+      providers: [{
+        provide: SessionService,
+        useClass: SessionServiceMock
+      }, Http, ConnectionBackend],
       declarations: [LoginComponent]
     })
       .compileComponents();
