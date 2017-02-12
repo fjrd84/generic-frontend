@@ -4,7 +4,7 @@ describe('generic-frontend App', function() {
   let page: GenericFrontendPage;
 
   beforeEach(() => {
-    page = new MigrationProjectPage();
+    page = new GenericFrontendPage();
   });
 
   it('should display message saying app works', () => {
