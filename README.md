@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fjrd84/generic-frontend.svg?branch=master)](https://travis-ci.org/fjrd84/generic-frontend) [![Coverage Status](https://coveralls.io/repos/github/fjrd84/generic-frontend/badge.svg?branch=master)](https://coveralls.io/github/fjrd84/generic-frontend?branch=master)
+
 # Generic Frontend
 
 This is an Angular 2 project, generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
