@@ -25,5 +25,4 @@ before_script:
 - ng build
 - ng test --watch=false --code-coverage
 
-script:
- - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
+after_success: 'npm run coveralls'
