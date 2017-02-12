@@ -24,7 +24,7 @@ before_script:
 - npm install coveralls
 - npm install
 - ng build
-- ng serve & ng e2e
+- ng serve 
 - ng test --watch=false --code-coverage
 
 script:
