@@ -39,9 +39,7 @@ export class SessionService {
     this._loggedIn = false;
     this._authToken = localStorage.getItem('authToken');
     this._user = {};
-    if (this._authToken !== null) {
-      this.updateUserInfo();
-    }
+    this.updateUserInfo();
   }
 
   /**
@@ -101,6 +99,10 @@ export class SessionService {
    * @memberOf SessionService
    */
   updateUserInfo() {
+    // Without a token, no user information can be retrieved.
+    if (this._authToken === null) {
+      return;
+    }
     this.getUserInfo().subscribe(data => {
     });
   }

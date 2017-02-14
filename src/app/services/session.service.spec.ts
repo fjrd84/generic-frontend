@@ -20,6 +20,7 @@ import { environment } from '../../environments/environment';
 describe('SessionService', () => {
 
   let sessionService;
+  let backend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,26 +28,45 @@ describe('SessionService', () => {
         MockBackend,
         BaseRequestOptions,
         {
-          deps: [
-            MockBackend,
-            BaseRequestOptions
-          ],
           provide: Http,
-          useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }
+          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
+            return new Http(backendInstance, defaultOptions);
+          },
+          deps: [MockBackend, BaseRequestOptions]
         }
       ],
     });
   });
 
-  beforeEach(inject([SessionService], s => {
-    localStorage.clear();
-    sessionService = s;
-  }));
+  beforeEach(inject([SessionService, MockBackend],
+    (_sessionService, _mockBackend) => {
+      localStorage.clear();
+      sessionService = _sessionService;
+      backend = _mockBackend;
+    }));
 
   it('exists', () => {
     expect(sessionService).toBeTruthy();
+  });
+
+  it('should not be logged in yet', () => {
+    expect(sessionService.loggedIn).toBeFalsy();
+    expect(sessionService.user).toEqual({});
+    expect(sessionService.authToken).toEqual(null);
+  });
+
+  it('should attempt to log in', (done) => {
+    backend.connections.subscribe((connection: MockConnection) => {
+      let options = new ResponseOptions({
+        body: JSON.stringify({ token: "someNiceToken" })
+      });
+      connection.mockRespond(new Response(options));
+    });
+    sessionService.logIn("someUser", "somePassword")
+      .subscribe(() => {
+        expect(sessionService.authToken).toEqual("someNiceToken");
+        done();
+      });
   });
 
 });
