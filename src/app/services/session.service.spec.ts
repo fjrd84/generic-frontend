@@ -6,6 +6,7 @@ import {
   Http,
   Response,
   ResponseOptions,
+  RequestMethod,
   XHRBackend
 } from '@angular/http';
 import {
@@ -57,6 +58,12 @@ describe('SessionService', () => {
 
   it('should attempt to log in', (done) => {
     backend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toEqual(RequestMethod.Post);
+      expect(connection.request.url).toContain('/auth/login');
+      expect(connection.request.headers.get('Content-Type')).toEqual("application/json");
+      let text = connection.request.json();
+      expect(text.email).toEqual("someUser");
+      expect(text.password).toEqual("somePassword");
       let options = new ResponseOptions({
         body: JSON.stringify({ token: "someNiceToken" })
       });

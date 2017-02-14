@@ -108,21 +108,19 @@ export class SessionService {
   }
 
   /**
-   * It attempts to login a user using the specified username and password.
-   * @param {string} username
+   * It attempts to login a user using the specified email and password.
+   * @param {string} email 
    * @param {string} password 
    * @returns {Observable<Object>} An observable that provides with the information about the logged in user or an error.
    */
-  logIn(username: string, password: string): Observable<Object> {
+  logIn(email: string, password: string): Observable<Object> {
     let self = this;
     return this.http.post(this._baseUrl + "/auth/login",
-      { email: username, password: password }, this._getRequestOptions())
+      { email: email, password: password }, this._getRequestOptions())
       .map(res => {
         let data = this.extractData(res);
         self._authToken = data.token;
         localStorage.setItem('authToken', data.token);
-        // After a successful login, the user information is retrieved.
-        self.updateUserInfo();
         return data;
       })
       .catch(this.handleError);

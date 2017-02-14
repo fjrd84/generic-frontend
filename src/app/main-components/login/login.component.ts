@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
   logIn() {
     this._sessionService.logIn(this._loginData.userName, this._loginData.password)
       .subscribe((response) => {
-        // No further step is required after a successful login
+        // The user information will be updated after a successful login.
+        this._sessionService.updateUserInfo();
       })
   }
 
