@@ -58,10 +58,10 @@ describe('SessionService', () => {
 
   it('should attempt to log in', (done) => {
     backend.connections.subscribe((connection: MockConnection) => {
+      let text = connection.request.json();
       expect(connection.request.method).toEqual(RequestMethod.Post);
       expect(connection.request.url).toContain('/auth/login');
       expect(connection.request.headers.get('Content-Type')).toEqual("application/json");
-      let text = connection.request.json();
       expect(text.email).toEqual("someUser");
       expect(text.password).toEqual("somePassword");
       let options = new ResponseOptions({
@@ -72,6 +72,27 @@ describe('SessionService', () => {
     sessionService.logIn("someUser", "somePassword")
       .subscribe(() => {
         expect(sessionService.authToken).toEqual("someNiceToken");
+        done();
+      });
+  });
+
+  it('should retrieve the user profile', (done) => {
+    backend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+      expect(connection.request.url).toContain('/auth/profile');
+      expect(connection.request.headers.get('Content-Type')).toEqual('application/json');
+      expect(connection.request.headers.get('Authorization')).toEqual('JWT someNiceToken');
+      let options = new ResponseOptions({
+        body: JSON.stringify({id: 'someId', local: {email: 'mrmr@lol.com'}})
+      });
+      connection.mockRespond(new Response(options));
+    });
+    sessionService._authToken = 'someNiceToken';
+    expect(sessionService.loggedIn).toBeFalsy();
+    sessionService.getUserInfo()
+      .subscribe(() => {
+        expect(sessionService.loggedIn).toBeTruthy();
+        expect(sessionService.user.id).toEqual('someId');
         done();
       });
   });
